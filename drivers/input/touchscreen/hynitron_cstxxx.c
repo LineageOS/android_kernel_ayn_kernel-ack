@@ -22,6 +22,7 @@
 #include <linux/mod_devicetable.h>
 #include <linux/module.h>
 #include <linux/property.h>
+#include <linux/regulator/consumer.h>
 #include <linux/unaligned.h>
 
 /* Per chip data */
@@ -41,6 +42,7 @@ struct hynitron_ts_data {
 	struct input_dev *input_dev;
 	struct touchscreen_properties prop;
 	struct gpio_desc *reset_gpio;
+	struct regulator *vdd;
 };
 
 /*
@@ -432,6 +434,24 @@ static int hyn_probe(struct i2c_client *client)
 	if (err) {
 		dev_err(&client->dev, "request reset gpio failed: %d\n", err);
 		return err;
+	}
+
+	ts_data->vdd = devm_regulator_get_optional(&client->dev, "vdd");
+	if (IS_ERR(ts_data->vdd)) {
+		err = PTR_ERR(ts_data->vdd);
+		if (err != -ENODEV)
+			return dev_err_probe(&client->dev, err,
+					     "Failed to request vdd regulator\n");
+
+		ts_data->vdd = NULL;
+	}
+
+	if (ts_data->vdd) {
+		err = regulator_enable(ts_data->vdd);
+		if (err) {
+			dev_err(&client->dev, "enable regulator failed: %d\n", err);
+			return err;
+		}
 	}
 
 	hyn_reset_proc(client, 60);
