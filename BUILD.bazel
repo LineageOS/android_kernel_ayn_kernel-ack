@@ -203,6 +203,7 @@ filegroup(
     srcs = [
         # keep sorted
         "gki/aarch64/symbols/allwinner",
+        "gki/aarch64/symbols/ayn",
         "gki/aarch64/symbols/db845c",
         "gki/aarch64/symbols/exynos",
         "gki/aarch64/symbols/exynosauto",
