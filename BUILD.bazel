@@ -1770,6 +1770,18 @@ devicetree_library(
     deps = ["//common:dtc_includes_aarch64"],
 )
 
+devicetree_library(
+    name = "all_qcom_dts",
+    hdrs = glob([
+        "arch/arm64/boot/dts/qcom/*.dts",
+        "arch/arm64/boot/dts/qcom/*.dtsi",
+        "arch/arm64/boot/dts/qcom/*.dtso",
+    ]),
+    includes = ["arch/arm64/boot/dts/qcom"],
+    visibility = ["//vendor:__subpackages__"],
+    deps = ["//common:dtc_includes_aarch64"],
+)
+
 _KSELFTEST_DIR = "testcases/selftests"
 
 _KSELFTEST_COPTS = [
