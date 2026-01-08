@@ -857,6 +857,7 @@ static int edt_ft5x06_ts_identify(struct i2c_client *client,
 	int error;
 	char *model_name = tsdata->name;
 	char *fw_version = tsdata->fw_version;
+	const struct i2c_device_id *id = i2c_client_get_device_id(client);
 
 	/* see what we find if we assume it is a M06 *
 	 * if we get less than EDT_NAME_LEN, we don't want
@@ -963,7 +964,8 @@ static int edt_ft5x06_ts_identify(struct i2c_client *client,
 			break;
 		default:
 			snprintf(model_name, EDT_NAME_LEN,
-				 "generic ft5x06 (%02x)",
+				 "generic %s (%02x)",
+				 (void*)id->name != NULL ? id->name : "ft5x06",
 				 rdbuf[0]);
 			break;
 		}
