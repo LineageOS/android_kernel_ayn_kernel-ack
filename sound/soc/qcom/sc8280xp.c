@@ -37,6 +37,7 @@ struct sc8280xp_snd_data {
 	struct snd_soc_jack dp_jack[8];
 	struct clk *i2s_clk[I2S_MAX_CLKS];
 	struct clk *i2s_mclk[I2S_MAX_CLKS];
+	u32 i2s_clk_count[I2S_MAX_CLKS];
 	bool jack_setup;
 };
 
@@ -129,12 +130,14 @@ static int sc8280xp_snd_startup(struct snd_pcm_substream *substream)
 	case PRIMARY_MI2S_RX...QUATERNARY_MI2S_TX:
 	case QUINARY_MI2S_RX...QUINARY_MI2S_TX:
 		index = sc8280xp_snd_i2s_index(cpu_dai);
-		ret = clk_prepare_enable(pdata->i2s_mclk[index]);
-		if (ret)
-			dev_err(pdata->card->dev, "Unable to enable bit clock\n");
-		ret = clk_prepare_enable(pdata->i2s_clk[index]);
-		if (ret)
-			dev_err(pdata->card->dev, "Unable to enable master clock\n");
+		if (++pdata->i2s_clk_count[index] == 1) {
+			ret = clk_prepare_enable(pdata->i2s_mclk[index]);
+			if (ret)
+				dev_err(pdata->card->dev, "Unable to enable bit clock\n");
+			ret = clk_prepare_enable(pdata->i2s_clk[index]);
+			if (ret)
+				dev_err(pdata->card->dev, "Unable to enable master clock\n");
+		}
 		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
 		break;
 	default:
@@ -156,8 +159,10 @@ static void sc8280xp_snd_shutdown(struct snd_pcm_substream *substream)
 	case PRIMARY_MI2S_RX...TERTIARY_MI2S_RX:
 	case QUINARY_MI2S_RX...QUINARY_MI2S_TX:
 		index = sc8280xp_snd_i2s_index(cpu_dai);
-		clk_disable_unprepare(pdata->i2s_clk[index]);
-		clk_disable_unprepare(pdata->i2s_mclk[index]);
+		if (--pdata->i2s_clk_count[index] == 0) {
+			clk_disable_unprepare(pdata->i2s_clk[index]);
+			clk_disable_unprepare(pdata->i2s_mclk[index]);
+		}
 		break;
 	default:
 		break;
