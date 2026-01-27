@@ -1770,7 +1770,7 @@ static int qcom_scm_find_dload_address(struct device *dev, u64 *addr)
 	return 0;
 }
 
-#ifdef CONFIG_QCOM_QSEECOM
+#if IS_ENABLED(CONFIG_QCOM_QSEECOM)
 
 /* Lock for QSEECOM SCM call executions */
 static DEFINE_MUTEX(qcom_scm_qseecom_call_lock);

@@ -42,8 +42,8 @@ config QCOM_TZMEM_MODE_SHMBRIDGE
 endchoice
 
 config QCOM_QSEECOM
-	bool "Qualcomm QSEECOM interface driver"
-	depends on QCOM_SCM=y
+	tristate "Qualcomm QSEECOM interface driver"
+	depends on QCOM_SCM
 	select AUXILIARY_BUS
 	help
 	  Various Qualcomm SoCs have a Secure Execution Environment (SEE) running
@@ -59,7 +59,7 @@ config QCOM_QSEECOM
 	  Select Y here to enable the QSEECOM interface driver.
 
 config QCOM_QSEECOM_UEFISECAPP
-	bool "Qualcomm SEE UEFI Secure App client driver"
+	tristate "Qualcomm SEE UEFI Secure App client driver"
 	depends on QCOM_QSEECOM
 	depends on EFI
 	help
