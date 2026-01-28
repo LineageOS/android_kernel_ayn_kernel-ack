@@ -456,9 +456,11 @@ static int hyn_probe(struct i2c_client *client)
 
 	hyn_reset_proc(client, 60);
 
-	err = ts_data->chip->bootloader_enter(client);
-	if (err < 0)
-		return err;
+	if (!device_property_read_bool(&client->dev, "hynitron,skip-bootloader")) {
+		err = ts_data->chip->bootloader_enter(client);
+		if (err < 0)
+			return err;
+	}
 
 	err = ts_data->chip->init_input(client);
 	if (err < 0)
