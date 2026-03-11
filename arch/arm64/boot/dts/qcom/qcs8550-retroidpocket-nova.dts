@@ -69,6 +69,11 @@
 	};
 };
 
+&gamepad {
+	ayntec,invert-left-stick;
+	ayntec,face-swapped;
+};
+
 &i2c_hub_3 {
 	clock-frequency = <100000>;
 
