@@ -42,6 +42,23 @@
 	rotation = <90>;
 };
 
+&i2c0 {
+	clock-frequency = <400000>;
+
+	status = "okay";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	backlight: backlight@46 {
+		compatible = "ayntec,odin2miniled";
+		reg = <0x46>;
+		enable-gpios = <&tlmm 55 GPIO_ACTIVE_HIGH>;
+		vcc_1v2-supply = <&vreg_l11b_1p2>;
+		vcc_3v3-supply = <&vreg_bob2>;
+	};
+};
+
 /* There is an hdmi bridge on i2c_hub_0@48, but it is not currently supported */
 
 &remoteproc_adsp {
