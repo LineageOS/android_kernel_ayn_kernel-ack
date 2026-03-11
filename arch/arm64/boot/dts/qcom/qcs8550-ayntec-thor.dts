@@ -81,6 +81,24 @@
 	};
 };
 
+&display_panel {
+	compatible = "ayntec,thor-panel-top", "chipone,icna3520";
+
+	pinctrl-0 = <&dsi_s_rst_active>, <&dsi_s_te_active>;
+	pinctrl-1 = <&dsi_s_rst_suspend>, <&dsi_s_te_suspend>;
+	pinctrl-names = "default", "sleep";
+
+	vdd-supply = <&vreg_l11b_1p2>;
+	vddio-supply = <&vreg_l12b_1p8>;
+	vci-supply = <&vreg_l14b_3p2>;
+	disp-supply = <&vdd_disp1_2v8>;
+	blvdd-supply = <&vdd_bl_5v0>;
+
+	reset-gpios = <&tlmm 137 GPIO_ACTIVE_LOW>;
+
+	rotation = <90>;
+};
+
 &gamepad {
 	ayntec,face-swapped;
 };
@@ -178,6 +196,20 @@
 
 	panel@0 {
 		reg = <0>;
+		compatible = "ayntec,thor-panel-bottom", "cwt,ch13726a";
+
+		pinctrl-0 = <&dsi_p_rst_active>, <&dsi_p_te_active>;
+		pinctrl-1 = <&dsi_p_rst_suspend>, <&dsi_p_te_suspend>;
+		pinctrl-names = "default", "sleep";
+
+		vdd1v2-supply = <&vreg_l11b_1p2>;
+		vddio-supply = <&vdd_disp_1v8>;
+		vdd-supply = <&vreg_l13b_3p0>;
+		avdd-supply = <&vdd_disp2_2v8>;
+
+		reset-gpios = <&tlmm 133 GPIO_ACTIVE_LOW>;
+
+		rotation = <90>;
 
 		port {
 			panel0_in: endpoint {
