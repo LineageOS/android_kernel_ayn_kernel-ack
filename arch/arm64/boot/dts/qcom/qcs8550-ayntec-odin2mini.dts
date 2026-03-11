@@ -25,6 +25,23 @@
 	};
 };
 
+&display_panel {
+	compatible = "ayntec,odin2mini-panel";
+
+	pinctrl-0 = <&dsi_p_rst_active>, <&dsi_p_te_active>;
+	pinctrl-1 = <&dsi_p_rst_suspend>, <&dsi_p_te_suspend>;
+	pinctrl-names = "default", "sleep";
+
+	vdd-supply = <&vreg_l11b_1p2>;
+	vddio-supply = <&vreg_l12b_1p8>;
+	vci-supply = <&vreg_l13b_3p0>;
+	disp-supply = <&vdd_disp_2v8>;
+
+	reset-gpios = <&tlmm 133 GPIO_ACTIVE_LOW>;
+
+	rotation = <90>;
+};
+
 /* There is an hdmi bridge on i2c_hub_0@48, but it is not currently supported */
 
 &remoteproc_adsp {
