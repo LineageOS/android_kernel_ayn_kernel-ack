@@ -29,6 +29,7 @@
 	aliases {
 		serial0 = &uart7;
 		serial1 = &uart14;
+		serial2 = &uart15;
 	};
 
 	/* The tzlog label is required by ABL to apply a dtbo, but it can be on any node */
@@ -1710,6 +1711,25 @@
 		vddrfa1p8-supply = <&vreg_pmu_rfa_1p8>;
 
 		max-speed = <3200000>;
+	};
+};
+
+&uart15 {
+	status = "okay";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	gamepad: gamepad@0 {
+		compatible = "ayntec,rsinput";
+		reg = <0>;
+
+		label = "AYN Odin2 Gamepad";
+
+		vdd-supply = <&vreg_bob2>;
+		enable-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
+		pinctrl-0 = <&mcu_en_active>;
+		pinctrl-names = "default";
 	};
 };
 
