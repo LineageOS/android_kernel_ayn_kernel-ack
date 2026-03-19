@@ -4,11 +4,11 @@
  */
 
 /dts-v1/;
+/plugin/;
 
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/input/input.h>
 #include <dt-bindings/interrupt-controller/irq.h>
-#include "qcs8550-ayntec-common.dtsi"
 
 &{/} {
 	model = "AYN Thor";
@@ -131,6 +131,9 @@
 &i2c0 {
 	status = "okay";
 
+	#address-cells = <1>;
+	#size-cells = <0>;
+
 	led-controller@3c {
 		status = "okay";
 	};
@@ -140,6 +143,9 @@
 	clock-frequency = <400000>;
 
 	status = "okay";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
 
 	touchscreen@38 {
 		compatible = "focaltech,ft5426";
@@ -167,6 +173,9 @@
 &i2c12 {
 	status = "okay";
 
+	#address-cells = <1>;
+	#size-cells = <0>;
+
 	led-controller@3c {
 		status = "okay";
 	};
@@ -176,6 +185,9 @@
 	clock-frequency = <100000>;
 
 	status = "okay";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
 
 	touchscreen@38 {
 		compatible = "focaltech,ft5452";
@@ -204,6 +216,9 @@
 	vdda-supply = <&vreg_l3e_1p2>;
 
 	status = "okay";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
 
 	panel@0 {
 		reg = <0>;
