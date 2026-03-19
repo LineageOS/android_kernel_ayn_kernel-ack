@@ -3,6 +3,8 @@
  * Copyright (c) 2025, Teguh Sobirin.
  */
 
+/dts-v1/;
+
 #include <dt-bindings/leds/common.h>
 #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
 #include "qcs8550.dtsi"
@@ -24,6 +26,8 @@
 /delete-node/ &remoteproc_mpss;
 
 / {
+	model = "AYN QCS8550 Common";
+	compatible = "ayntec,qcs8550-common", "qcom,qcs8550", "qcom,sm8550";
 	chassis-type = "handset";
 
 	aliases {
