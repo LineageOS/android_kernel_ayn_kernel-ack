@@ -4,11 +4,11 @@
  */
 
 /dts-v1/;
+/plugin/;
 
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/interrupt-controller/irq.h>
 #include <dt-bindings/leds/common.h>
-#include "qcs8550-ayntec-common.dtsi"
 
 &{/} {
 	model = "AYN Odin 2 Portal";
@@ -120,6 +120,9 @@
 
 	status = "okay";
 
+	#address-cells = <1>;
+	#size-cells = <0>;
+
 	htr3212l: led-controller@3c {
 		compatible = "heroic,htr3212";
 		reg = <0x3c>;
@@ -196,6 +199,9 @@
 
 	status = "okay";
 
+	#address-cells = <1>;
+	#size-cells = <0>;
+
 	touchscreen@38 {
 		compatible = "focaltech,ft5426";
 		reg = <0x38>;
@@ -223,6 +229,9 @@
 	clock-frequency = <400000>;
 
 	status = "okay";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
 
 	htr3212r: led-controller@3c {
 		compatible = "heroic,htr3212";

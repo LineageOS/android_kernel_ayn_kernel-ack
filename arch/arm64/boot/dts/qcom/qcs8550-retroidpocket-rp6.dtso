@@ -1,15 +1,18 @@
 // SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Copyright (C) 2026-present ROCKNIX (https://github.com/ROCKNIX).
+ */
 
 /dts-v1/;
+/plugin/;
 
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/interrupt-controller/irq.h>
 #include <dt-bindings/leds/common.h>
-#include "qcs8550-ayntec-common.dtsi"
 
 &{/} {
-	model = "Retroid Pocket Nova";
-	compatible = "retroidpocket,nova", "qcom,qcs8550", "qcom,sm8550";
+	model = "Retroid Pocket 6";
+	compatible = "retroidpocket,rp6", "qcom,qcs8550", "qcom,sm8550";
 
 	backlight: backlight {
 		compatible = "pwm-backlight";
@@ -126,18 +129,17 @@
 	};
 };
 
-&gamepad {
-	ayntec,face-swapped;
-};
-
 &mdss_dsi0 {
 	vdda-supply = <&vreg_l3e_1p2>;
 
 	status = "okay";
 
+	#address-cells = <1>;
+	#size-cells = <0>;
+
 	panel@0 {
 		reg = <0>;
-		compatible = "retroidpocket,nova-panel";
+		compatible = "retroidpocket,rp6-panel";
 
 		pinctrl-0 = <&dsi_p_rst_active>, <&dsi_p_te_active>;
 		pinctrl-1 = <&dsi_p_rst_suspend>, <&dsi_p_te_suspend>;
@@ -149,6 +151,8 @@
 		reset-gpios = <&tlmm 133 GPIO_ACTIVE_LOW>;
 
 		backlight = <&backlight>;
+
+		rotation = <270>;
 
 		port {
 			panel0_in: endpoint {
@@ -177,6 +181,9 @@
 	clock-frequency = <400000>;
 
 	status = "okay";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
 
 	htr3212l: led-controller@3c {
 		compatible = "heroic,htr3212";
@@ -254,6 +261,9 @@
 
 	status = "okay";
 
+	#address-cells = <1>;
+	#size-cells = <0>;
+
 	htr3212r: led-controller@3c {
 		compatible = "heroic,htr3212";
 		reg = <0x3c>;
@@ -330,9 +340,14 @@
 
 	status = "okay";
 
+	#address-cells = <1>;
+	#size-cells = <0>;
+
 	touchscreen@38 {
 		compatible = "focaltech,ft5426";
 		reg = <0x38>;
+		#address-cells = <1>;
+		#size-cells = <0>;
 
 		interrupt-parent = <&tlmm>;
 		interrupts = <15 IRQ_TYPE_EDGE_FALLING>;
@@ -345,8 +360,9 @@
 		pinctrl-1 = <&ts_p_rst_sleep &ts_p_int_sleep>;
 		pinctrl-names = "default", "sleep";
 
-		touchscreen-size-x = <1280>;
-		touchscreen-size-y = <960>;
+		touchscreen-size-x = <1080>;
+		touchscreen-size-y = <1920>;
+		touchscreen-swapped-x-y;
         };
 };
 
@@ -355,16 +371,16 @@
 };
 
 &remoteproc_adsp {
-	firmware-name = "qcom/sm8550/retroidpocket/nova/adsp.mbn",
-			"qcom/sm8550/retroidpocket/nova/adsp_dtb.mbn";
+	firmware-name = "qcom/sm8550/retroidpocket/rp6/adsp.mbn",
+			"qcom/sm8550/retroidpocket/rp6/adsp_dtb.mbn";
 
 	status = "okay";
 };
 
 &spk_amp_l {
-	firmware-name = "qcom/sm8550/retroidpocket/nova/aw883xx_acf.bin";
+	firmware-name = "qcom/sm8550/retroidpocket/rp6/aw883xx_acf.bin";
 };
 
 &spk_amp_r {
-	firmware-name = "qcom/sm8550/retroidpocket/nova/aw883xx_acf.bin";
+	firmware-name = "qcom/sm8550/retroidpocket/rp6/aw883xx_acf.bin";
 };

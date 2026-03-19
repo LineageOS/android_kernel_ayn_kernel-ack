@@ -4,10 +4,10 @@
  */
 
 /dts-v1/;
+/plugin/;
 
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/interrupt-controller/irq.h>
-#include "qcs8550-ayntec-common.dtsi"
 
 &{/} {
 	model = "AYN Odin 2 Mini";
@@ -55,6 +55,9 @@
 
 	status = "okay";
 
+	#address-cells = <1>;
+	#size-cells = <0>;
+
 	backlight: backlight@46 {
 		compatible = "ayntec,odin2miniled";
 		reg = <0x46>;
@@ -68,6 +71,9 @@
 	clock-frequency = <400000>;
 
 	status = "okay";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
 
 	touchscreen@1a {
 		compatible = "hynitron,cst340";
