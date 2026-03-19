@@ -4,12 +4,12 @@
  */
 
 /dts-v1/;
+/plugin/;
 
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/input/input.h>
 #include <dt-bindings/interrupt-controller/irq.h>
 #include <dt-bindings/leds/common.h>
-#include "qcs8550-ayntec-common.dtsi"
 
 &{/} {
 	model = "AYN Thor";
