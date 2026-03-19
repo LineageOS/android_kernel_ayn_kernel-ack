@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 /dts-v1/;
+/plugin/;
 
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/interrupt-controller/irq.h>
 #include <dt-bindings/leds/common.h>
-#include "qcs8550-ayntec-common.dtsi"
 
 &{/} {
 	model = "Retroid Pocket Nova";
@@ -135,6 +135,9 @@
 
 	status = "okay";
 
+	#address-cells = <1>;
+	#size-cells = <0>;
+
 	panel@0 {
 		reg = <0>;
 		compatible = "retroidpocket,nova-panel";
@@ -177,6 +180,9 @@
 	clock-frequency = <400000>;
 
 	status = "okay";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
 
 	htr3212l: led-controller@3c {
 		compatible = "heroic,htr3212";
@@ -254,6 +260,9 @@
 
 	status = "okay";
 
+	#address-cells = <1>;
+	#size-cells = <0>;
+
 	htr3212r: led-controller@3c {
 		compatible = "heroic,htr3212";
 		reg = <0x3c>;
@@ -330,9 +339,14 @@
 
 	status = "okay";
 
+	#address-cells = <1>;
+	#size-cells = <0>;
+
 	touchscreen@38 {
 		compatible = "focaltech,ft5426";
 		reg = <0x38>;
+		#address-cells = <1>;
+		#size-cells = <0>;
 
 		interrupt-parent = <&tlmm>;
 		interrupts = <15 IRQ_TYPE_EDGE_FALLING>;

@@ -4,11 +4,11 @@
  */
 
 /dts-v1/;
+/plugin/;
 
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/interrupt-controller/irq.h>
 #include <dt-bindings/leds/common.h>
-#include "qcs8550-ayntec-common.dtsi"
 
 &{/} {
 	model = "AYN Odin 2";
@@ -173,6 +173,9 @@
 
 	status = "okay";
 
+	#address-cells = <1>;
+	#size-cells = <0>;
+
 	pwm_rgb_left: sn3112@54 {
 		compatible = "si-en,sn3112-pwm";
 		reg = <0x54>;
@@ -186,6 +189,9 @@
 	clock-frequency = <400000>;
 
 	status = "okay";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
 
 	touchscreen@20 {
 		compatible = "syna,rmi4-i2c";
@@ -226,6 +232,9 @@
 	clock-frequency = <400000>;
 
 	status = "okay";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
 
 	pwm_rgb_right: sn3112@54 {
 		compatible = "si-en,sn3112-pwm";
