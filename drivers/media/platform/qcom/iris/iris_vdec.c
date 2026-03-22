@@ -188,6 +188,7 @@ int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f)
 	struct v4l2_format *fmt, *output_fmt;
 	struct vb2_queue *q;
 	u32 codec_align;
+	struct platform_inst_caps *caps;
 
 	q = v4l2_m2m_get_vq(inst->m2m_ctx, f->type);
 	if (!q)
@@ -202,6 +203,14 @@ int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f)
 	if (f->fmt.pix_mp.width == 0 && f->fmt.pix_mp.height == 0) {
 		f->fmt.pix_mp.width = DEFAULT_WIDTH;
 		f->fmt.pix_mp.height = DEFAULT_HEIGHT;
+	} else if (f->fmt.pix_mp.width == UINT_MAX && f->fmt.pix_mp.height == UINT_MAX) {
+		caps = inst->core->iris_platform_data->inst_caps;
+
+		f->fmt.pix_mp.width = caps->max_frame_width;
+		if (NUM_MBS_PER_FRAME(caps->max_frame_width, caps->max_frame_height) > caps->max_mbpf)
+			f->fmt.pix_mp.height = caps->max_mbpf * 256 / caps->max_frame_width;
+		else
+			f->fmt.pix_mp.height = caps->max_frame_height;
 	}
 
 	iris_vdec_try_fmt(inst, f);
