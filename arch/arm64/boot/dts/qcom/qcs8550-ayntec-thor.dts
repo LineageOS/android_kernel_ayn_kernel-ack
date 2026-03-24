@@ -99,6 +99,10 @@
 	rotation = <90>;
 };
 
+&gamepad {
+	ayntec,face-swapped;
+};
+
 &gpio_keys {
 	pinctrl-0 = <&volume_up_n &key_ayn_n>;
 

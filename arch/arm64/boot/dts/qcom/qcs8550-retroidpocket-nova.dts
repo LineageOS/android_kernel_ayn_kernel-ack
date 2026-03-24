@@ -69,6 +69,10 @@
 	};
 };
 
+&gamepad {
+	ayntec,face-swapped;
+};
+
 &mdss_dsi1 {
     status = "disabled";
 };
