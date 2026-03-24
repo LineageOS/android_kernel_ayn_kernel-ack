@@ -36,6 +36,10 @@
 	};
 };
 
+&gamepad {
+	ayntec,face-swapped;
+};
+
 &i2c4 {
 	clock-frequency = <400000>;
 
