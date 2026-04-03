@@ -19,6 +19,7 @@
 #include "peer.h"
 #include "debugfs.h"
 #include "hif.h"
+#include "vendor.h"
 #include "wow.h"
 #include "debugfs_sta.h"
 
@@ -13925,6 +13926,7 @@ static int ath12k_mac_hw_register(struct ath12k_hw *ah)
 		wiphy_ext_feature_set(hw->wiphy, NL80211_EXT_FEATURE_BEACON_PROTECTION);
 
 	ath12k_reg_init(hw);
+	ath12k_vendor_register(hw);
 
 	if (!is_raw_mode) {
 		hw->netdev_features = NETIF_F_HW_CSUM;
