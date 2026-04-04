@@ -4585,6 +4585,22 @@ enum qca_wlan_vendor_attr_ll_stats_ext {
 		QCA_WLAN_VENDOR_ATTR_LL_STATS_EXT_LAST - 1
 };
 
+/**
+ * enum qca_wlan_vendor_attr_get_supported_features - get supported feature
+ *
+ * @QCA_WLAN_VENDOR_ATTR_FEATURE_SET_INVALID: Invalid initial value
+ * @QCA_WLAN_VENDOR_ATTR_FEATURE_SET: Unsigned 32bit value
+ * @QCA_WLAN_VENDOR_ATTR_FEATURE_SET_AFTER_LAST: After last
+ * @QCA_WLAN_VENDOR_ATTR_FEATURE_SET_MAX: Max value
+ */
+enum qca_wlan_vendor_attr_get_supported_features {
+	QCA_WLAN_VENDOR_ATTR_FEATURE_SET_INVALID = 0,
+	QCA_WLAN_VENDOR_ATTR_FEATURE_SET = 1,
+	QCA_WLAN_VENDOR_ATTR_FEATURE_SET_AFTER_LAST,
+	QCA_WLAN_VENDOR_ATTR_FEATURE_SET_MAX =
+		QCA_WLAN_VENDOR_ATTR_FEATURE_SET_AFTER_LAST - 1,
+};
+
 /* Attributes for FTM commands and events */
 
 /**
