@@ -52,6 +52,32 @@ nla_put_failure:
 }
 
 const struct nla_policy
+ath12k_vendor_get_logger_set_policy[QCA_WLAN_VENDOR_ATTR_LOGGER_MAX + 1] = {
+        [QCA_WLAN_VENDOR_ATTR_LOGGER_SUPPORTED] = {.type = NLA_U32},
+};
+
+static int ath12k_vendor_get_logger_supp_feature(struct wiphy *wiphy,
+						 struct wireless_dev *wdev,
+						 const void *data, int data_len)
+{
+	struct sk_buff *reply_skb;
+	uint32_t features = 0;
+
+	reply_skb = cfg80211_vendor_cmd_alloc_reply_skb(wiphy, sizeof(features) + NLA_HDRLEN + NLMSG_HDRLEN);
+	if (!reply_skb)
+		return -ENOMEM;
+
+	if (nla_put_u32(reply_skb, QCA_WLAN_VENDOR_ATTR_LOGGER_SUPPORTED, features))
+		goto nla_put_failure;
+
+	return cfg80211_vendor_cmd_reply(reply_skb);
+
+nla_put_failure:
+	kfree_skb(reply_skb);
+	return -EINVAL;
+}
+
+const struct nla_policy
 ath12k_vendor_get_wifi_info_policy[QCA_WLAN_VENDOR_ATTR_WIFI_INFO_GET_MAX + 1] = {
         [QCA_WLAN_VENDOR_ATTR_WIFI_INFO_DRIVER_VERSION] = {.type = NLA_U8 },
         [QCA_WLAN_VENDOR_ATTR_WIFI_INFO_FIRMWARE_VERSION] = {.type = NLA_U8 },
@@ -112,6 +138,17 @@ static struct wiphy_vendor_command ath12k_vendor_commands[] = {
 			 WIPHY_VENDOR_CMD_NEED_NETDEV,
 		.doit = ath12k_vendor_get_supported_features,
 		.policy = VENDOR_CMD_RAW_DATA
+	},
+	{
+		.info = {
+			.vendor_id = OUI_QCA,
+			.subcmd = QCA_NL80211_VENDOR_SUBCMD_GET_LOGGER_FEATURE_SET,
+		},
+		.flags = WIPHY_VENDOR_CMD_NEED_WDEV |
+			 WIPHY_VENDOR_CMD_NEED_NETDEV,
+		.doit = ath12k_vendor_get_logger_supp_feature,
+		.policy = ath12k_vendor_get_logger_set_policy,
+		.maxattr = QCA_WLAN_VENDOR_ATTR_LOGGER_MAX
 	},
 	{
 		.info = {
