@@ -10,6 +10,47 @@
 #include "debug.h"
 #include "vendor.h"
 
+static int ath12k_vendor_get_supported_features(struct wiphy *wiphy,
+						struct wireless_dev *wdev,
+						const void *data, int data_len)
+{
+	struct ieee80211_hw *hw = wiphy_to_ieee80211_hw(wiphy);
+	struct ath12k_hw *ah = ath12k_hw_to_ah(hw);
+	struct sk_buff *reply_skb;
+	struct ath12k *ar;
+	int i;
+	u16 interface_modes = U16_MAX;
+	uint32_t fset = WIFI_FEATURE_INFRA |
+			WIFI_FEATURE_INFRA_5G |
+			WIFI_FEATURE_SOFT_AP |
+			WIFI_FEATURE_HOTSPOT |
+			WIFI_FEATURE_AP_STA |
+			WIFI_FEATURE_RSSI_MONITOR |
+			WIFI_FEATURE_TX_TRANSMIT_POWER |
+			WIFI_FEATURE_SET_TX_POWER_LIMIT |
+			WIFI_FEATURE_CONFIG_NDO;
+
+	for_each_ar(ah, ar, i)
+		interface_modes &= ar->ab->hw_params->interface_modes;
+
+	if ((interface_modes & BIT(NL80211_IFTYPE_P2P_CLIENT)) &&
+	    (interface_modes & BIT(NL80211_IFTYPE_P2P_GO)))
+		fset |= WIFI_FEATURE_P2P;
+
+	reply_skb = cfg80211_vendor_cmd_alloc_reply_skb(wiphy, sizeof(fset) + NLMSG_HDRLEN);
+	if (!reply_skb)
+		return -ENOMEM;
+
+	if (nla_put_u32(reply_skb, QCA_WLAN_VENDOR_ATTR_FEATURE_SET, fset))
+		goto nla_put_failure;
+
+	return cfg80211_vendor_cmd_reply(reply_skb);
+
+nla_put_failure:
+	kfree_skb(reply_skb);
+	return -EINVAL;
+}
+
 const struct nla_policy
 ath12k_vendor_get_wifi_info_policy[QCA_WLAN_VENDOR_ATTR_WIFI_INFO_GET_MAX + 1] = {
         [QCA_WLAN_VENDOR_ATTR_WIFI_INFO_DRIVER_VERSION] = {.type = NLA_U8 },
@@ -62,6 +103,16 @@ error_nla_fail:
 }
 
 static struct wiphy_vendor_command ath12k_vendor_commands[] = {
+	{
+		.info = {
+			.vendor_id = OUI_QCA,
+			.subcmd = QCA_NL80211_VENDOR_SUBCMD_GET_SUPPORTED_FEATURES,
+		},
+		.flags = WIPHY_VENDOR_CMD_NEED_WDEV |
+			 WIPHY_VENDOR_CMD_NEED_NETDEV,
+		.doit = ath12k_vendor_get_supported_features,
+		.policy = VENDOR_CMD_RAW_DATA
+	},
 	{
 		.info = {
 			.vendor_id = OUI_QCA,
