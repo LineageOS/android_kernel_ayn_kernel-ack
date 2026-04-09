@@ -268,6 +268,7 @@
 
 	touchscreen@38 {
 		compatible = "focaltech,ft5426";
+		label = "ft5426";
 		reg = <0x38>;
 
 		interrupt-parent = <&tlmm>;
@@ -372,6 +373,7 @@
 
 	touchscreen@38 {
 		compatible = "focaltech,ft5452";
+		label = "ft5452";
 		reg = <0x38>;
 
 		interrupt-parent = <&tlmm>;
