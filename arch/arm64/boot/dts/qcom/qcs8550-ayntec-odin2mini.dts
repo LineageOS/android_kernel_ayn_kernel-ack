@@ -25,6 +25,14 @@
 	};
 };
 
+/* No macro keys on this device */
+&gpio_keys {
+	pinctrl-0 = <&volume_up_n>;
+
+	/delete-node/ key-m1;
+	/delete-node/ key-m2;
+};
+
 /* There is an hdmi bridge on i2c_hub_0@48, but it is not currently supported */
 
 &remoteproc_adsp {
