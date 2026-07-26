@@ -40,8 +40,24 @@
 	gpio_keys: gpio-keys {
 		compatible = "gpio-keys";
 
-		pinctrl-0 = <&volume_up_n>;
+		pinctrl-0 = <&volume_up_n &key_m1_n &key_m2_n>;
 		pinctrl-names = "default";
+
+		key-m1 {
+			label = "M1 Key";
+			debounce-interval = <15>;
+			gpios = <&tlmm 57 GPIO_ACTIVE_LOW>;
+			linux,code = <KEY_F22>;
+			linux,can-disable;
+		};
+
+		key-m2 {
+			label = "M2 Key";
+			debounce-interval = <15>;
+			gpios = <&tlmm 58 GPIO_ACTIVE_LOW>;
+			linux,code = <KEY_F23>;
+			linux,can-disable;
+		};
 
 		key-volume-up {
 			label = "Volume Up";
@@ -1594,6 +1610,20 @@
 		function = "gpio";
 		bias-pull-down;
 		drive-strength = <2>;
+	};
+
+	key_m1_n: key-m1-n-state {
+		pins = "gpio57";
+		function = "gpio";
+		bias-pull-up;
+		output-disable;
+	};
+
+	key_m2_n: key-m2-n-state {
+		pins = "gpio58";
+		function = "gpio";
+		bias-pull-up;
+		output-disable;
 	};
 
 	wlan_en: wlan-en-state {
