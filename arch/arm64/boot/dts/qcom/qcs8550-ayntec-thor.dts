@@ -102,6 +102,10 @@
 &gpio_keys {
 	pinctrl-0 = <&volume_up_n &key_ayn_n>;
 
+	/* No macro keys on this device */
+	/delete-node/ key-m1;
+	/delete-node/ key-m2;
+
 	key-ayn {
 		label = "AYN Key";
 		debounce-interval = <15>;
