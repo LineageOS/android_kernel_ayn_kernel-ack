@@ -128,6 +128,14 @@
 	};
 };
 
+&i2c0 {
+	status = "okay";
+
+	led-controller@3c {
+		status = "okay";
+	};
+};
+
 &i2c4 {
 	clock-frequency = <400000>;
 
@@ -153,6 +161,14 @@
 		touchscreen-size-y = <1920>;
 		touchscreen-swapped-x-y;
 		touchscreen-inverted-x;
+	};
+};
+
+&i2c12 {
+	status = "okay";
+
+	led-controller@3c {
+		status = "okay";
 	};
 };
 
