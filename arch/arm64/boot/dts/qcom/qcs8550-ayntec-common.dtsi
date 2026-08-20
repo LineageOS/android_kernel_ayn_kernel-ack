@@ -1217,6 +1217,230 @@
 	firmware-name = "qcom/sm8550/a740_zap.mbn";
 };
 
+&i2c0 {
+	clock-frequency = <400000>;
+
+	led-controller@3c {
+		compatible = "heroic,htr3212";
+		reg = <0x3c>;
+		sdb-gpios = <&tlmm 55 GPIO_ACTIVE_HIGH>;
+		vdd-supply = <&vdd_mcu_3v3>;
+
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		status = "disabled";
+
+		multi-led@0 {
+			reg = <0>;
+			color = <LED_COLOR_ID_RGB>;
+			label = "left:stick:0";
+
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			led@0 {
+				reg = <0>;
+				color = <LED_COLOR_ID_RED>;
+			};
+
+			led@1 {
+				reg = <1>;
+				color = <LED_COLOR_ID_GREEN>;
+			};
+
+			led@2 {
+				reg = <2>;
+				color = <LED_COLOR_ID_BLUE>;
+			};
+		};
+
+		multi-led@1 {
+			reg = <1>;
+			color = <LED_COLOR_ID_RGB>;
+			label = "left:stick:1";
+
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			led@0 {
+				reg = <3>;
+				color = <LED_COLOR_ID_RED>;
+			};
+
+			led@1 {
+				reg = <4>;
+				color = <LED_COLOR_ID_GREEN>;
+			};
+
+			led@2 {
+				reg = <5>;
+				color = <LED_COLOR_ID_BLUE>;
+			};
+		};
+
+		multi-led@2 {
+			reg = <2>;
+			color = <LED_COLOR_ID_RGB>;
+			label = "left:stick:2";
+
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			led@0 {
+				reg = <6>;
+				color = <LED_COLOR_ID_RED>;
+			};
+
+			led@1 {
+				reg = <7>;
+				color = <LED_COLOR_ID_GREEN>;
+			};
+
+			led@2 {
+				reg = <8>;
+				color = <LED_COLOR_ID_BLUE>;
+			};
+		};
+
+		multi-led@3 {
+			reg = <3>;
+			color = <LED_COLOR_ID_RGB>;
+			label = "left:stick:3";
+
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			led@0 {
+				reg = <9>;
+				color = <LED_COLOR_ID_RED>;
+			};
+
+			led@1 {
+				reg = <10>;
+				color = <LED_COLOR_ID_GREEN>;
+			};
+
+			led@2 {
+				reg = <11>;
+				color = <LED_COLOR_ID_BLUE>;
+			};
+		};
+	};
+};
+
+&i2c12 {
+	clock-frequency = <400000>;
+
+	led-controller@3c {
+		compatible = "heroic,htr3212";
+		reg = <0x3c>;
+		sdb-gpios = <&tlmm 56 GPIO_ACTIVE_HIGH>;
+		vdd-supply = <&vdd_mcu_3v3>;
+
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		status = "disabled";
+
+		multi-led@0 {
+			reg = <0>;
+			color = <LED_COLOR_ID_RGB>;
+			label = "right:stick:0";
+
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			led@0 {
+				reg = <0>;
+				color = <LED_COLOR_ID_RED>;
+			};
+
+			led@1 {
+				reg = <1>;
+				color = <LED_COLOR_ID_GREEN>;
+			};
+
+			led@2 {
+				reg = <2>;
+				color = <LED_COLOR_ID_BLUE>;
+			};
+		};
+
+		multi-led@1 {
+			reg = <1>;
+			color = <LED_COLOR_ID_RGB>;
+			label = "right:stick:1";
+
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			led@0 {
+				reg = <3>;
+				color = <LED_COLOR_ID_RED>;
+			};
+
+			led@1 {
+				reg = <4>;
+				color = <LED_COLOR_ID_GREEN>;
+			};
+
+			led@2 {
+				reg = <5>;
+				color = <LED_COLOR_ID_BLUE>;
+			};
+		};
+
+		multi-led@2 {
+			reg = <2>;
+			color = <LED_COLOR_ID_RGB>;
+			label = "right:stick:2";
+
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			led@0 {
+				reg = <6>;
+				color = <LED_COLOR_ID_RED>;
+			};
+
+			led@1 {
+				reg = <7>;
+				color = <LED_COLOR_ID_GREEN>;
+			};
+
+			led@2 {
+				reg = <8>;
+				color = <LED_COLOR_ID_BLUE>;
+			};
+		};
+
+		multi-led@3 {
+			reg = <3>;
+			color = <LED_COLOR_ID_RGB>;
+			label = "right:stick:3";
+
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			led@0 {
+				reg = <9>;
+				color = <LED_COLOR_ID_RED>;
+			};
+
+			led@1 {
+				reg = <10>;
+				color = <LED_COLOR_ID_GREEN>;
+			};
+
+			led@2 {
+				reg = <11>;
+				color = <LED_COLOR_ID_BLUE>;
+			};
+		};
+	};
+};
+
 &i2c_master_hub_0 {
 	status = "okay";
 };

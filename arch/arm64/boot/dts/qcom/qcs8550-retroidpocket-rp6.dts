@@ -76,6 +76,22 @@
 	ayntec,face-swapped;
 };
 
+&i2c0 {
+	status = "okay";
+
+	led-controller@3c {
+		status = "okay";
+	};
+};
+
+&i2c12 {
+	status = "okay";
+
+	led-controller@3c {
+		status = "okay";
+	};
+};
+
 &i2c_hub_3 {
 	clock-frequency = <100000>;
 
